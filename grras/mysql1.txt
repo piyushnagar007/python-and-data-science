@@ -1,0 +1,494 @@
+(base) nagar@codex:/opt/lampp/lib$ /opt/lampp/bin/mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.3.16-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database grras
+    -> Ctrl-C -- exit!
+Aborted
+(base) nagar@codex:/opt/lampp/lib$ /opt/lampp/bin/mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.3.16-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create databse grras;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databse grras' at line 1
+MariaDB [(none)]> create databse grras
+    -> Ctrl-C -- exit!
+Aborted
+(base) nagar@codex:/opt/lampp/lib$ /opt/lampp/bin/mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.3.16-MariaDB Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create databse grras;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databse grras' at line 1
+MariaDB [(none)]> create database grras;
+Query OK, 1 row affected (0.040 sec)
+
+MariaDB [(none)]> use grras;
+Database changed
+MariaDB [grras]> show tables;
+Empty set (0.001 sec)
+
+MariaDB [grras]> CREATE TABLE student(sid INT(5) NOT NULL auto_increment, name VARCHAR(50) NOT NULL, ph_no VARCHAR(13) DEFAULT 'NA',email VARCHAR(50) NOT NULL, CONSTRAINT `pk` PRIMARY KEY  (sid) );
+Query OK, 0 rows affected (0.272 sec)
+
+MariaDB [grras]> describe student;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| sid   | int(5)      | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | NO   |     | NULL    |                |
+| ph_no | varchar(13) | YES  |     | NA      |                |
+| email | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.003 sec)
+
+MariaDB [grras]> CREATE TABLE address(addr_id INT(3) NOT NULL PRIMARY KEY AUTO_INCREMENT,sid INT(5) NOT NULL, house_no VARCHAR(10),street VARCHAR(100), area VARCHAR(200), land_marks VARCHAR(200), city VARCHAR(50) NOT NULL, state VARCHAR(50) NOT NULL, country VARCHAR(50) NOT NULL,pincode INT(6) NOT NULL, CONSTRAINT `fk_student` FOREIGN KEY (sid) REFERENCES student(sid) ON DELETE CASCADE ON UPDATE NO ACTION );
+Query OK, 0 rows affected (0.308 sec)
+
+MariaDB [grras]> describe address
+    -> describe address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'describe address' at line 2
+MariaDB [grras]> describe address;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| addr_id    | int(3)       | NO   | PRI | NULL    | auto_increment |
+| sid        | int(5)       | NO   | MUL | NULL    |                |
+| house_no   | varchar(10)  | YES  |     | NULL    |                |
+| street     | varchar(100) | YES  |     | NULL    |                |
+| area       | varchar(200) | YES  |     | NULL    |                |
+| land_marks | varchar(200) | YES  |     | NULL    |                |
+| city       | varchar(50)  | NO   |     | NULL    |                |
+| state      | varchar(50)  | NO   |     | NULL    |                |
+| country    | varchar(50)  | NO   |     | NULL    |                |
+| pincode    | int(6)       | NO   |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.003 sec)
+
+MariaDB [grras]> CREATE TABLE fees(fid INT(5) NOT NULL PRIMARY KEY AUTO_INCREMENT, sid INT(3) NOT NULL, due DOUBLE, fees DOUBLE, discount DOUBLE,CONSTRAINT `student_fk` FOREIGN KEY (sid) REFERENCES student(sid) );
+Query OK, 0 rows affected (0.313 sec)
+
+MariaDB [grras]> show tables;
++-----------------+
+| Tables_in_grras |
++-----------------+
+| address         |
+| fees            |
+| student         |
++-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [grras]> user;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'user' at line 1
+MariaDB [grras]> select user.host from mysql.user;
++-----------+
+| host      |
++-----------+
+| 127.0.0.1 |
+| ::1       |
+| localhost |
+| localhost |
+| localhost |
++-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [grras]> select user,host from mysql.user;
++------+-----------+
+| user | host      |
++------+-----------+
+| root | 127.0.0.1 |
+| root | ::1       |
+|      | localhost |
+| pma  | localhost |
+| root | localhost |
++------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [grras]> from mysql.user delete where username='pma';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'from mysql.user delete where username='pma'' at line 1
+MariaDB [grras]> create user "st"@"localhost" identified by "redhat";
+Query OK, 0 rows affected (0.036 sec)
+
+MariaDB [grras]> grant select on mysql.user to "st"@"localhost";
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [grras]> create user "demo"@"localhost" identified by "redhat";
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [grras]> grant select on student.* to "demo"@"localhost";
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [grras]> create user "demo"@"%" identified by "redhat";
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [grras]> grant slect on student.* to "demo"@"%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'on student.* to "demo"@"%"' at line 1
+MariaDB [grras]> grant select on grras.* to "demo"@"localhost";
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [grras]> select * from student;
+Empty set (0.000 sec)
+
+MariaDB [grras]> describe student;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| sid   | int(5)      | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | NO   |     | NULL    |                |
+| ph_no | varchar(13) | YES  |     | NA      |                |
+| email | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.002 sec)
+
+MariaDB [grras]> select * from student;
+Empty set (0.001 sec)
+
+MariaDB [grras]> INSERT INTO student(sid,name,ph_no,email) VALUES(1001,'sachin',9782131159,'sachin@grras.com');
+Query OK, 1 row affected (0.053 sec)
+
+MariaDB [grras]> select * from student;
++------+--------+------------+------------------+
+| sid  | name   | ph_no      | email            |
++------+--------+------------+------------------+
+| 1001 | sachin | 9782131159 | sachin@grras.com |
++------+--------+------------+------------------+
+1 row in set (0.001 sec)
+
+MariaDB [grras]> INSERT INTO address(addr_id,sid,house_no,street,area,land_marks,city,state,country,pincode) values(1,1001,'c-54','kana vihar','ayodhya nagar','behid ram mandir','jaipur','rajasthan','india',302021);
+Query OK, 1 row affected (0.058 sec)
+
+MariaDB [grras]> INSERT INTO fees(fid,sid,due,fees,discount) values(1,1001,3500,15000,2000);
+Query OK, 1 row affected (0.064 sec)
+
+MariaDB [grras]> INSERT INTO student(name,ph_no,email) VALUES ('kushal',1234323456,'kushal.samota@grras.com'), ('rajat',8923342334,'rajat.goyal@gmail.com'), ('ravi',9782123432,'ravi.sarswat@gmail.com'), ('gaurav',992334561,'gaurav.saluja@gmai.com'), ('nidhi',9912345678,'nidhi.sharma@yahoo.com') ;
+Query OK, 5 rows affected (0.108 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [grras]> select * from student;
++------+--------+------------+-------------------------+
+| sid  | name   | ph_no      | email                   |
++------+--------+------------+-------------------------+
+| 1001 | sachin | 9782131159 | sachin@grras.com        |
+| 1002 | kushal | 1234323456 | kushal.samota@grras.com |
+| 1003 | rajat  | 8923342334 | rajat.goyal@gmail.com   |
+| 1004 | ravi   | 9782123432 | ravi.sarswat@gmail.com  |
+| 1005 | gaurav | 992334561  | gaurav.saluja@gmai.com  |
+| 1006 | nidhi  | 9912345678 | nidhi.sharma@yahoo.com  |
++------+--------+------------+-------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select * from fees;
++-----+------+------+-------+----------+
+| fid | sid  | due  | fees  | discount |
++-----+------+------+-------+----------+
+|   1 | 1001 | 3500 | 15000 |     2000 |
++-----+------+------+-------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [grras]> INSERT INTO address (sid,house_no,street,area,land_marks,city,state,country,pincode) values (1002,'112/23','','near main market','','udaipur','rajasthan','india',313001), (1003,'d-112','near om garden','jayanti road','','jaipur','rajasthan','india',302026), (1004,'k-12','gyan vihar','near gt road','','jaipur','rajasthan','india',302024), (1005,'k-12','','behid kiran sweets','himmat nagar','jaipur','rajasthan','india',302026), (1006,'c-56','mansorvar plaza','','','kaipur','rajasthan','india',313001);
+Query OK, 5 rows affected (0.057 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [grras]> select * from address;
++---------+------+----------+-----------------+--------------------+------------------+---------+-----------+---------+---------+
+| addr_id | sid  | house_no | street          | area               | land_marks       | city    | state     | country | pincode |
++---------+------+----------+-----------------+--------------------+------------------+---------+-----------+---------+---------+
+|       1 | 1001 | c-54     | kana vihar      | ayodhya nagar      | behid ram mandir | jaipur  | rajasthan | india   |  302021 |
+|       2 | 1002 | 112/23   |                 | near main market   |                  | udaipur | rajasthan | india   |  313001 |
+|       3 | 1003 | d-112    | near om garden  | jayanti road       |                  | jaipur  | rajasthan | india   |  302026 |
+|       4 | 1004 | k-12     | gyan vihar      | near gt road       |                  | jaipur  | rajasthan | india   |  302024 |
+|       5 | 1005 | k-12     |                 | behid kiran sweets | himmat nagar     | jaipur  | rajasthan | india   |  302026 |
+|       6 | 1006 | c-56     | mansorvar plaza |                    |                  | kaipur  | rajasthan | india   |  313001 |
++---------+------+----------+-----------------+--------------------+------------------+---------+-----------+---------+---------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> INSERT INTO fees(sid,due,fees,discount) values (1002,5000,20000,0), (1003,4300,15000,2000), (1004,2700,18000,1000), (1005,3500,16000,3000), (1006,7500,25000,3500) ;
+Query OK, 5 rows affected (0.053 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [grras]> select * from student where name like "%chin%";
++------+--------+------------+------------------+
+| sid  | name   | ph_no      | email            |
++------+--------+------------+------------------+
+| 1001 | sachin | 9782131159 | sachin@grras.com |
++------+--------+------------+------------------+
+1 row in set (0.001 sec)
+
+MariaDB [grras]> select name,ph_no from student;
++--------+------------+
+| name   | ph_no      |
++--------+------------+
+| sachin | 9782131159 |
+| kushal | 1234323456 |
+| rajat  | 8923342334 |
+| ravi   | 9782123432 |
+| gaurav | 992334561  |
+| nidhi  | 9912345678 |
++--------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select name as Student_name,ph_no as Phone_Number;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+MariaDB [grras]> select name as Student_name,ph_no as Phone_Number from student;
++--------------+--------------+
+| Student_name | Phone_Number |
++--------------+--------------+
+| sachin       | 9782131159   |
+| kushal       | 1234323456   |
+| rajat        | 8923342334   |
+| ravi         | 9782123432   |
+| gaurav       | 992334561    |
+| nidhi        | 9912345678   |
++--------------+--------------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select name,email from student where name="sachin" or name ="kushal";
++--------+-------------------------+
+| name   | email                   |
++--------+-------------------------+
+| sachin | sachin@grras.com        |
+| kushal | kushal.samota@grras.com |
++--------+-------------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [grras]> select * from address where sid=student.sid;
+ERROR 1054 (42S22): Unknown column 'student.sid' in 'where clause'
+MariaDB [grras]> desc address;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| addr_id    | int(3)       | NO   | PRI | NULL    | auto_increment |
+| sid        | int(5)       | NO   | MUL | NULL    |                |
+| house_no   | varchar(10)  | YES  |     | NULL    |                |
+| street     | varchar(100) | YES  |     | NULL    |                |
+| area       | varchar(200) | YES  |     | NULL    |                |
+| land_marks | varchar(200) | YES  |     | NULL    |                |
+| city       | varchar(50)  | NO   |     | NULL    |                |
+| state      | varchar(50)  | NO   |     | NULL    |                |
+| country    | varchar(50)  | NO   |     | NULL    |                |
+| pincode    | int(6)       | NO   |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.002 sec)
+
+MariaDB [grras]> select name,city from student,address;
++--------+---------+
+| name   | city    |
++--------+---------+
+| sachin | jaipur  |
+| kushal | jaipur  |
+| rajat  | jaipur  |
+| ravi   | jaipur  |
+| gaurav | jaipur  |
+| nidhi  | jaipur  |
+| sachin | udaipur |
+| kushal | udaipur |
+| rajat  | udaipur |
+| ravi   | udaipur |
+| gaurav | udaipur |
+| nidhi  | udaipur |
+| sachin | jaipur  |
+| kushal | jaipur  |
+| rajat  | jaipur  |
+| ravi   | jaipur  |
+| gaurav | jaipur  |
+| nidhi  | jaipur  |
+| sachin | jaipur  |
+| kushal | jaipur  |
+| rajat  | jaipur  |
+| ravi   | jaipur  |
+| gaurav | jaipur  |
+| nidhi  | jaipur  |
+| sachin | jaipur  |
+| kushal | jaipur  |
+| rajat  | jaipur  |
+| ravi   | jaipur  |
+| gaurav | jaipur  |
+| nidhi  | jaipur  |
+| sachin | kaipur  |
+| kushal | kaipur  |
+| rajat  | kaipur  |
+| ravi   | kaipur  |
+| gaurav | kaipur  |
+| nidhi  | kaipur  |
++--------+---------+
+36 rows in set (0.001 sec)
+
+MariaDB [grras]> select name,city from student outer join on address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join on address' at line 1
+MariaDB [grras]> select name,city from student outerjoin on address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'on address' at line 1
+MariaDB [grras]> select name from student outer join on city from address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join on city from address' at line 1
+MariaDB [grras]> select name from student inner join address on student.id=address.sid;
+ERROR 1054 (42S22): Unknown column 'student.id' in 'on clause'
+MariaDB [grras]> select student.name,address.city from student,address where student.id=address.sid;
+ERROR 1054 (42S22): Unknown column 'student.id' in 'where clause'
+MariaDB [grras]> select student.name,address.city from student,address where student.sid=address.sid;
++--------+---------+
+| name   | city    |
++--------+---------+
+| sachin | jaipur  |
+| kushal | udaipur |
+| rajat  | jaipur  |
+| ravi   | jaipur  |
+| gaurav | jaipur  |
+| nidhi  | kaipur  |
++--------+---------+
+6 rows in set (0.018 sec)
+
+MariaDB [grras]> insert into student(name,ph_no,email) values ('piyush',3333,'wqd@g');
+Query OK, 1 row affected (0.059 sec)
+
+MariaDB [grras]> insert into student(name,ph_no,email) values ('nagar',3333333,'wwwqd@g');
+Query OK, 1 row affected (0.065 sec)
+
+MariaDB [grras]> select * from students
+    -> select * from students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'select * from students' at line 2
+MariaDB [grras]> select * from students;
+ERROR 1146 (42S02): Table 'grras.students' doesn't exist
+MariaDB [grras]> select * from student;
++------+--------+------------+-------------------------+
+| sid  | name   | ph_no      | email                   |
++------+--------+------------+-------------------------+
+| 1001 | sachin | 9782131159 | sachin@grras.com        |
+| 1002 | kushal | 1234323456 | kushal.samota@grras.com |
+| 1003 | rajat  | 8923342334 | rajat.goyal@gmail.com   |
+| 1004 | ravi   | 9782123432 | ravi.sarswat@gmail.com  |
+| 1005 | gaurav | 992334561  | gaurav.saluja@gmai.com  |
+| 1006 | nidhi  | 9912345678 | nidhi.sharma@yahoo.com  |
+| 1007 | piyush | 3333       | wqd@g                   |
+| 1008 | nagar  | 3333333    | wwwqd@g                 |
++------+--------+------------+-------------------------+
+8 rows in set (0.001 sec)
+
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s inner join fees f on s.sid = f.sid;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| ravi   | 9782123432 | 2700 | 18000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 7500 | 25000 |
++--------+------------+------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s inner join fees f on s.sid = f.sid where f.due >= 3500;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 7500 | 25000 |
++--------+------------+------+-------+
+5 rows in set (0.001 sec)
+
+MariaDB [grras]> CREATE VIEW fees_status as select student.name,student.ph_no,fees.due,fees.fees from student,fees where fees.sid=student.sid;
+Query OK, 0 rows affected (0.071 sec)
+
+MariaDB [grras]> desc fees_status;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(50) | NO   |     | NULL    |       |
+| ph_no | varchar(13) | YES  |     | NA      |       |
+| due   | double      | YES  |     | NULL    |       |
+| fees  | double      | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.005 sec)
+
+MariaDB [grras]> select * from fees_status;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| ravi   | 9782123432 | 2700 | 18000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 7500 | 25000 |
++--------+------------+------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> update fees_status set due=4000 where name='nidhi';
+Query OK, 1 row affected (0.197 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grras]> select * from fees_status;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| ravi   | 9782123432 | 2700 | 18000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 4000 | 25000 |
++--------+------------+------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select * from fees;
++-----+------+------+-------+----------+
+| fid | sid  | due  | fees  | discount |
++-----+------+------+-------+----------+
+|   1 | 1001 | 3500 | 15000 |     2000 |
+|   2 | 1002 | 5000 | 20000 |        0 |
+|   3 | 1003 | 4300 | 15000 |     2000 |
+|   4 | 1004 | 2700 | 18000 |     1000 |
+|   5 | 1005 | 3500 | 16000 |     3000 |
+|   6 | 1006 | 4000 | 25000 |     3500 |
++-----+------+------+-------+----------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s left join fees f on s.sid = f.sid;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| ravi   | 9782123432 | 2700 | 18000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 4000 | 25000 |
+| piyush | 3333       | NULL |  NULL |
+| nagar  | 3333333    | NULL |  NULL |
++--------+------------+------+-------+
+8 rows in set (0.001 sec)
+
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s right join fees f on s.sid = f.sid;
++--------+------------+------+-------+
+| name   | ph_no      | due  | fees  |
++--------+------------+------+-------+
+| sachin | 9782131159 | 3500 | 15000 |
+| kushal | 1234323456 | 5000 | 20000 |
+| rajat  | 8923342334 | 4300 | 15000 |
+| ravi   | 9782123432 | 2700 | 18000 |
+| gaurav | 992334561  | 3500 | 16000 |
+| nidhi  | 9912345678 | 4000 | 25000 |
++--------+------------+------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s full join fees f on s.sid = f.sid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'full join fees f on s.sid = f.sid' at line 1
+MariaDB [grras]> select s.name,s.ph_no,f.due,f.fees from student s outer join fees f on s.sid = f.sid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join fees f on s.sid = f.sid' at line 1
+MariaDB [grras]
